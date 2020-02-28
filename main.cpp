@@ -1,66 +1,56 @@
 #include <iostream>
 
-struct Node{
+class Node{
 public:
-    Node* left = nullptr;
-    Node* right = nullptr;
-    int key;
-
-    explicit Node(int elem): key(elem) {};
-    Node(int elem, Node* left,  Node* right){
-        this->left = left;
-        this->right = right;
-        key = elem;
-    };
-};
-
-class Tree{
-public:
-    Node *root;
-
-    Tree(Node* newRoot){
-        root = newRoot;
+    Node(int i_key): key(i_key) {}
+    int getKey() const{
+        return key;
     }
 
     void add(int elem){
-        Node* currentNode = root;
-        bool flag = true;
-      while(flag){
-            if (currentNode->key >= elem){
-                if (currentNode->left) currentNode = currentNode->left;
-                else {
-                    currentNode->left = new Node(elem);
-                    flag = false;
-                }
+
+       if (elem <= key){
+            if (left != nullptr){
+                left->add(elem);
             }
-            else {
-                if (currentNode->right) currentNode = currentNode->right;
-                else {
-                    currentNode->right = new Node(elem);
-                    flag = false;
-                }
+            else{
+                left = new Node(elem);
             }
+        }
+        else{
+            if (right != nullptr){
+                right->add(elem);
+            }
+            else{
+                right = new Node(elem);
             }
         }
 
-    void printInward(Node* root){
-        if (root->left) printInward(root->left);
-        std::cout <<  root->key << std::endl;
-        if (root->right) printInward(root->right);
     }
+
+    void printInward(){
+        if (left) left->printInward();
+        std::cout << key << " ";
+        if (right) right->printInward();
+    }
+
+private:
+    int key;
+    Node *left = nullptr,
+        *right = nullptr;
+
 };
 
-
-
 int main() {
-    Tree tree(new Node(5));
-    tree.add(2);
-    tree.add(6);
-    tree.add(10);
-    tree.add(1);
-    tree.add(3);
-    tree.add(4);
-
-    tree.printInward(tree.root);
+    Node root(5);
+    root.add(1);
+    root.add(7);
+    root.add(3);
+    root.add(15);
+    root.add(6);
+    root.add(2);
+    root.add(3);
+    root.printInward();
+    std::cout << std::endl;
     return 0;
 }
