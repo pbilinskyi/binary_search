@@ -43,13 +43,12 @@ private:
 
 int main() {
     Node root(5);
-    root.add(1);
-    root.add(7);
-    root.add(3);
-    root.add(15);
-    root.add(6);
-    root.add(2);
-    root.add(3);
+
+    size_t n;
+    while ((std::cin >> n) && (n != 0)){
+        root.add(n);
+    }
+
     root.printInward();
     std::cout << std::endl;
     return 0;
