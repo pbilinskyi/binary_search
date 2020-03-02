@@ -2,14 +2,15 @@
 
 class Node{
 public:
-    Node(int i_key): key(i_key) {}
+    Node(size_t i_key): key(i_key) {}
+
     int getKey() const{
         return key;
     }
 
-    void add(int elem){
+    void add(size_t elem){
 
-       if (elem <= key){
+        if (elem <= key){
             if (left != nullptr){
                 left->add(elem);
             }
@@ -41,15 +42,31 @@ private:
 
 };
 
+class BinaryTree{
+    Node* root = nullptr;
+public:
+    void add(size_t elem){
+        if (root)
+            root->add(elem);
+        else
+            root = new Node(elem);
+    }
+    void printInward(){
+        root->printInward();
+    }
+};
+
+
 int main() {
-    Node root(5);
+    BinaryTree tree;
 
     size_t n;
     while ((std::cin >> n) && (n != 0)){
-        root.add(n);
+        tree.add(n);
     }
 
-    root.printInward();
+    tree.printInward();
     std::cout << std::endl;
+
     return 0;
 }
